@@ -25,6 +25,9 @@ async function askQuestion(question) {
 async function main() {
    
     try{
+
+        // Create a new assistant
+
         const assistant = await openai.beta.assistants.create({
             name:"Math Tutor Assistant",
             instructions:"You are a personal math tutor, Write and run code to answer math questions",
@@ -34,13 +37,14 @@ async function main() {
 
         console.log("안녕 친구, 나는 당신의 수학 과외선생님이냐, 뭐든지 질문해 줘  ");
 
+        // Create a new thread
         const thread = await openai.beta.threads.create();
 
         let keepAsking = true;
 
         while(keepAsking){
 
-            const userQuestion = await askQuestion("\nWhat is your question? ");;
+            const userQuestion = await askQuestion("\YOU: ");;
 
             await openai.beta.threads.messages.create(thread.id,{
                 role:"user",
@@ -68,15 +72,16 @@ async function main() {
             const lastMessaageForRun = messages.data.filter((message) => message.run_id === run.id && message.role === "assistant").pop();
 
             if(lastMessaageForRun){
-                console.log(`${lastMessaageForRun.content[0].text.value}\n`);
+                console.log(`Assistant:${lastMessaageForRun.content[0].text.value}\n`);
             }
 
-            const continueAsking = await askQuestion("다른 질문이 있습니까(yes/no)?");
+            const continueAsking = await askQuestion("\n 다른 질문이 있습니까(yes/no)?" );
 
             keepAsking = continueAsking.toLowerCase() === "yes";
 
+
             if(!keepAsking){
-               console.log("안녕 친구, 또 만나요");
+               console.log("Goodbye!");
                return;
             }
 
