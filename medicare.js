@@ -82,7 +82,7 @@ async function print_messages_from_thread(run_id,thread_id) {
         English:"${lastMessaageForRun.content[0].text.value}\n", 
         Korean:
         `
-
+/*
         const completion = await openai.chat.completions.create({
             messages: [{"role": "system", "content": "You are a Korean translator."},
                        {"role": "user", "content": prompt}
@@ -93,7 +93,7 @@ async function print_messages_from_thread(run_id,thread_id) {
         
         console.log("번역:",completion.choices[0].message.content);
 
-
+*/
     
     }else{
 
